@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>آزمون بافت موی زنانه</title>
+
+    <!-- Tailwind + Vazirmatn -->
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+
+    <!-- tiny custom for glass/animations (bare minimum) -->
+    <style>
+        * {
+            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, system-ui, sans-serif;
+        }
+
+        /* glassmorphism base */
+        .glass {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+        }
+        .dark .glass {
+            background: rgba(30, 30, 40, 0.55);
+            border-color: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+        }
+
+        /* custom radio — pure Tailwind would need @apply, so we keep tiny CSS */
+        .radio-custom {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d4b8a4;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            background: #fff;
+        }
+        .dark .radio-custom {
+            border-color: #6b5a4e;
+            background: #2a2520;
+        }
+        .radio-custom:checked {
+            border-color: #9b6b4a;
+            background: #9b6b4a;
+            box-shadow: inset 0 0 0 4px #fff;
+        }
+        .dark .radio-custom:checked {
+            border-color: #b8896a;
+            background: #b8896a;
+            box-shadow: inset 0 0 0 4px #1e1a16;
+        }
+        .radio-custom:focus-visible {
+            outline: 2px solid #9b6b4a;
+            outline-offset: 2px;
+        }
+        .dark .radio-custom:focus-visible {
+            outline-color: #b8896a;
+        }
+
+        /* question enter animation */
+        .question-enter {
+            animation: fadeSlide 0.45s ease-out forwards;
+            opacity: 0;
+            transform: translateY(18px);
+        }
+        .question-enter:nth-child(1) {
+            animation-delay: 0.02s;
+        }
+        .question-enter:nth-child(2) {
+            animation-delay: 0.06s;
+        }
+        .question-enter:nth-child(3) {
+            animation-delay: 0.10s;
+        }
+        .question-enter:nth-child(4) {
+            animation-delay: 0.14s;
+        }
+        .question-enter:nth-child(5) {
+            animation-delay: 0.18s;
+        }
+        .question-enter:nth-child(6) {
+            animation-delay: 0.22s;
+        }
+        .question-enter:nth-child(7) {
+            animation-delay: 0.26s;
+        }
+        .question-enter:nth-child(8) {
+            animation-delay: 0.30s;
+        }
+        .question-enter:nth-child(9) {
+            animation-delay: 0.34s;
+        }
+        .question-enter:nth-child(10) {
+            animation-delay: 0.38s;
+        }
+        .question-enter:nth-child(11) {
+            animation-delay: 0.42s;
+        }
+        .question-enter:nth-child(12) {
+            animation-delay: 0.46s;
+        }
+        .question-enter:nth-child(13) {
+            animation-delay: 0.50s;
+        }
+        .question-enter:nth-child(14) {
+            animation-delay: 0.54s;
+        }
+        .question-enter:nth-child(15) {
+            animation-delay: 0.58s;
+        }
+
+        @keyframes fadeSlide {
+            0% {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* floating button subtle pulse */
+        .float-btn {
+            transition: all 0.25s ease;
+        }
+        .float-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 12px 40px rgba(155, 107, 74, 0.30);
+        }
+        .dark .float-btn:hover {
+            box-shadow: 0 12px 40px rgba(184, 137, 106, 0.25);
+        }
+
+        /* score card glow */
+        .score-glow {
+            animation: scorePulse 2s ease-in-out infinite;
+        }
+        @keyframes scorePulse {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(155, 107, 74, 0.15);
+            }
+            50% {
+                box-shadow: 0 0 0 12px rgba(155, 107, 74, 0.02);
+            }
+        }
+
+        /* smooth dark mode transition */
+        * {
+            transition: background-color 0.25s ease, border-color 0.25s ease, color 0.2s ease, box-shadow 0.25s ease;
+        }
+
+        /* RTL scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c4a992;
+            border-radius: 12px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #5a4a3e;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50/70 to-rose-50/80 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 p-4 md:p-6 transition-colors duration-300">
+
+    <!-- ====== MAIN WRAPPER ====== -->
+    <div class="max-w-3xl mx-auto relative">
+
+        <!-- ====== HEADER ====== -->
+        <div class="glass rounded-2xl p-5 md:p-7 mb-6 flex flex-wrap items-center justify-between gap-3">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold text-[#7a4b3c] dark:text-amber-200/90 tracking-tight">
+                    🧑‍🦰 آزمون بافت موی زنانه
+                </h1>
+                <p class="text-sm text-[#8b6a5b] dark:text-amber-100/60 mt-0.5">
+                    به همه سؤالات پاسخ دهید و ثبت کنید
+                </p>
+            </div>
+            <!-- Dark Mode Toggle -->
+            <button id="darkToggle"
+            class="flex items-center gap-2 px-4 py-2 rounded-xl glass text-[#7a4b3c] dark:text-amber-200/80 text-sm font-medium hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-2 focus:ring-[#9b6b4a]/40 dark:focus:ring-amber-300/30"
+            aria-label="تغییر حالت شب/روز">
+            <span id="darkIcon">🌙</span>
+            <span id="darkLabel" class="hidden sm:inline">شب</span>
+        </button>
+    </div>
+
+    <!-- ====== PROGRESS + COUNTER ====== -->
+    <div class="glass rounded-2xl p-4 md:p-5 mb-6 flex flex-wrap items-center gap-4">
+        <div class="flex-1 min-w-[120px]">
+            <div class="flex justify-between text-xs text-[#7a4b3c] dark:text-amber-200/70 mb-1.5">
+                <span>پیشرفت</span>
+                <span id="progressText">۰٪</span>
+            </div>
+            <div class="w-full h-2.5 bg-[#e6d7cc]/60 dark:bg-gray-700/60 rounded-full overflow-hidden">
+                <div id="progressBar"
+                class="h-full bg-gradient-to-l from-[#9b6b4a] to-[#c4957a] dark:from-amber-400 dark:to-amber-500 rounded-full transition-all duration-500 ease-out"
+                style="width:0%;">
+            </div>
+        </div>
+    </div>
+    <div class="flex items-center gap-2 text-sm font-medium text-[#7a4b3c] dark:text-amber-200/80 whitespace-nowrap">
+        <span id="answeredCount">۰</span>
+        <span>از</span>
+        <span id="totalCount">۰</span>
+        <span>سؤال</span>
+    </div>
+</div>
+
+<!-- ====== QUIZ CONTAINER ====== -->
+<div id="quiz-container" class="space-y-5"></div>
+
+<!-- ====== FLOATING SUBMIT BUTTON ====== -->
+<button id="submit-btn"
+class="float-btn fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[90%] max-w-sm rounded-2xl bg-[#9b6b4a] dark:bg-amber-600 text-white text-lg font-bold py-4 px-6 shadow-2xl shadow-[#9b6b4a]/30 dark:shadow-amber-600/25 border border-white/20 dark:border-amber-400/20 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed disabled:scale-95 transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-[#9b6b4a]/40 dark:focus:ring-amber-400/30">
+    <span>📋</span>
+    <span>ثبت پاسخ‌ها</span>
+</button>
+
+<!-- ====== SCORE DISPLAY (big card) ====== -->
+<div id="score-wrapper" class="mt-8 mb-6 hidden">
+    <div id="score-display"
+    class="glass rounded-2xl p-6 md:p-8 text-center score-glow border-2 border-[#9b6b4a]/20 dark:border-amber-400/20">
+    <div class="text-5xl md:text-6xl mb-2">🏆</div>
+    <div class="text-2xl md:text-3xl font-bold text-[#7a4b3c] dark:text-amber-200/90" id="scoreText">
+        ۰ از ۰
+    </div>
+    <div class="text-sm text-[#8b6a5b] dark:text-amber-100/60 mt-1" id="scorePercent">
+        ۰٪
+    </div>
+    <div class="mt-4 h-1.5 w-full max-w-[200px] mx-auto bg-[#e6d7cc]/50 dark:bg-gray-700/50 rounded-full overflow-hidden">
+        <div id="scoreBar" class="h-full bg-gradient-to-l from-[#9b6b4a] to-[#c4957a] dark:from-amber-400 dark:to-amber-500 rounded-full transition-all duration-700" style="width:0%;"></div>
+    </div>
+</div>
+</div>
+
+<!-- ====== FOOTER ====== -->
+<div class="text-center text-xs text-[#ab8f7e] dark:text-amber-100/40 mt-6 pb-4">
+    پس از ثبت، پاسخ‌های صحیح و غلط مشخص می‌شوند.
+</div>
+</div>
+
+<!-- ============================================================ -->
+<!-- ====== JS — ORIGINAL QUIZ LOGIC (INTACT) + NEW FEATURES ====== -->
+<!-- ============================================================ -->
+<script>
+    // ===== ORIGINAL QUIZ DATA & LOGIC (unchanged except render uses Tailwind) =====
+    let quizData = [];
+    const quizContainer = document.getElementById('quiz-container');
+    const submitBtn = document.getElementById('submit-btn');
+    const scoreDisplay = document.getElementById('score-display');
+    const scoreWrapper = document.getElementById('score-wrapper');
+    const scoreText = document.getElementById('scoreText');
+    const scorePercent = document.getElementById('scorePercent');
+    const scoreBar = document.getElementById('scoreBar');
+    let submitted = false;
+
+    // ---- render with Tailwind + glass + animations ----
+    function renderQuiz() {
+        let html = '';
+        quizData.forEach((q, index) => {
+            html += `
+                    <div class="question-enter glass rounded-2xl p-5 md:p-6 transition-all duration-300 hover:shadow-xl hover:shadow-[#9b6b4a]/5 dark:hover:shadow-amber-400/5 border border-white/30 dark:border-gray-700/30" id="q-${index}">
+                        <div class="flex items-start gap-3 mb-4">
+                            <span class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-[#dbbca5]/40 dark:bg-amber-700/30 text-[#7a4b3c] dark:text-amber-200/80 font-bold text-sm flex-shrink-0">${index+1}</span>
+                            <span class="text-base md:text-lg font-medium text-[#4d3a2c] dark:text-amber-100/90 leading-relaxed">${q.question}</span>
+                        </div>
+                        <ul class="options space-y-2 pr-0 md:pr-2">
+                            ${q.options.map((opt, optIndex) => `
+                                <li>
+                                    <label id="label-${index}-${optIndex}" class="flex items-center gap-3 p-3 rounded-xl bg-white/50 dark:bg-gray-800/40 border border-[#dacbbc] dark:border-gray-700/50 hover:bg-white/70 dark:hover:bg-gray-700/50 hover:border-[#b8977e] dark:hover:border-amber-600/40 cursor-pointer transition-all duration-200 group focus-within:ring-2 focus-within:ring-[#9b6b4a]/30 dark:focus-within:ring-amber-400/30">
+                                        <input type="radio" name="q${index}" value="${optIndex}" class="radio-custom">
+                                        <span class="text-sm md:text-base text-[#3e2f22] dark:text-amber-100/80">${optIndex+1}) ${opt}</span>
+                                    </label>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+                `;
+        });
+        quizContainer.innerHTML = html;
+
+        // update total count
+        document.getElementById('totalCount').textContent = quizData.length;
+
+        // attach radio change listeners for progress
+        document.querySelectorAll('input[type="radio"]').forEach(r => {
+            r.addEventListener('change', updateProgress);
+        });
+        updateProgress();
+    }
+
+    // ---- get selected answers (unchanged) ----
+    function getSelectedAnswers() {
+        const answers = {};
+        quizData.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            answers[index] = selected ? parseInt(selected.value) : null;
+        });
+        return answers;
+    }
+
+    // ---- mark results with Tailwind styling ----
+    function markResults(answers) {
+        let correctCount = 0;
+        quizData.forEach((q, index) => {
+            const card = document.getElementById(`q-${index}`);
+            const selected = answers[index];
+            const correct = q.correct;
+
+            const radios = document.querySelectorAll(`input[name="q${index}"]`);
+            radios.forEach(r => r.disabled = true);
+            const labels = card.querySelectorAll('label');
+            labels.forEach(l => l.classList.add('opacity-80', 'cursor-default'));
+
+            // remove old icons
+            const oldIcon = card.querySelector('.result-icon');
+            if (oldIcon) oldIcon.remove();
+
+            // add result class
+            if (selected === correct) {
+                correctCount++;
+                card.classList.add('border-r-4', 'border-r-green-500', 'bg-green-50/50', 'dark:bg-green-900/20');
+                card.innerHTML += `<span class="result-icon absolute top-4 left-4 text-xl">✅</span>`;
+                const cl = document.getElementById(`label-${index}-${correct}`);
+                if (cl) cl.classList.add('bg-green-100/60', 'dark:bg-green-800/30', 'border-green-400', 'dark:border-green-600');
+            } else {
+                card.classList.add('border-r-4', 'border-r-red-400', 'bg-red-50/40', 'dark:bg-red-900/15');
+                card.innerHTML += `<span class="result-icon absolute top-4 left-4 text-xl">❌</span>`;
+                if (selected !== null) {
+                    const wl = document.getElementById(`label-${index}-${selected}`);
+                    if (wl) wl.classList.add('bg-red-100/60', 'dark:bg-red-800/25', 'border-red-300', 'dark:border-red-600/60',
+                    'line-through', 'decoration-red-400/70');
+                }
+                const cl = document.getElementById(`label-${index}-${correct}`);
+                if (cl) cl.classList.add('bg-green-100/60', 'dark:bg-green-800/30', 'border-green-400', 'dark:border-green-600');
+            }
+            // ensure card has relative for icon
+            card.style.position = 'relative';
+        });
+        return correctCount;
+    }
+
+    // ---- submit (unchanged logic) ----
+    submitBtn.addEventListener('click', () => {
+        if (submitted) return;
+        const answers = getSelectedAnswers();
+        const unanswered = Object.values(answers).some(ans => ans === null);
+        if (unanswered) {
+            alert('لطفاً به تمام سوالات پاسخ دهید.');
+            return;
+        }
+        submitted = true;
+        submitBtn.disabled = true;
+        const correctCount = markResults(answers);
+        const total = quizData.length;
+        const pct = Math.round((correctCount / total) * 100);
+
+        // show big score card
+        scoreWrapper.classList.remove('hidden');
+        scoreText.textContent = `${correctCount} از ${total}`;
+        scorePercent.textContent = `${pct}٪`;
+        scoreBar.style.width = `${pct}%`;
+
+        // also update original score display (kept for compatibility)
+        const origScore = document.getElementById('score-display');
+        if (origScore) {
+            origScore.textContent = `نتیجه: ${correctCount} از ${total} پاسخ صحیح (${pct}%)`;
+        }
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ---- load data (unchanged) ----
+    async function loadQuizData() {
+        try {
+            const response = await fetch('data.json');
+            if (!response.ok) throw new Error('خطا در خواندن data.json');
+            quizData = await response.json();
+            renderQuiz();
+        } catch (err) {
+            console.error(err);
+            quizContainer.innerHTML = `
+                    <div class="glass rounded-2xl p-8 text-center text-red-500 dark:text-red-400">
+                        ⚠️ خطا در بارگذاری سوالات
+                    </div>
+                `;
+        }
+    }
+
+    // ===== NEW FEATURES: PROGRESS, DARK MODE, ETC =====
+
+    // ---- update progress bar & counter ----
+    function updateProgress() {
+        const total = quizData.length;
+        if (!total) return;
+        const checked = document.querySelectorAll('input[type="radio"]:checked').length;
+        const pct = Math.round((checked / total) * 100);
+        document.getElementById('progressBar').style.width = `${pct}%`;
+        document.getElementById('progressText').textContent = `${pct}%`;
+        document.getElementById('answeredCount').textContent = checked;
+    }
+
+    // ---- dark mode toggle ----
+    const darkToggle = document.getElementById('darkToggle');
+    const darkIcon = document.getElementById('darkIcon');
+    const darkLabel = document.getElementById('darkLabel');
+
+    // check saved preference
+    if (localStorage.getItem('darkMode') === 'true' ||
+        (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        darkIcon.textContent = '☀️';
+        darkLabel.textContent = 'روز';
+    }
+
+    darkToggle.addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('darkMode', isDark);
+        darkIcon.textContent = isDark ? '☀️' : '🌙';
+        darkLabel.textContent = isDark ? 'روز' : 'شب';
+    });
+
+    // ---- start ----
+    loadQuizData();
+
+    // ---- re-run progress when radios change (also handled in render) ----
+    // extra safety: use mutation observer for dynamic radios
+    const observer = new MutationObserver(() => {
+        document.querySelectorAll('input[type="radio"]').forEach(r => {
+            r.removeEventListener('change', updateProgress);
+            r.addEventListener('change', updateProgress);
+        });
+        updateProgress();
+    });
+    observer.observe(quizContainer, { childList: true, subtree: true });
+
+    // ---- handle floating button on scroll (hide when at bottom) ----
+    let lastScrollY = window.scrollY;
+    window.addEventListener('scroll', () => {
+        const btn = submitBtn;
+        if (submitted) {
+            btn.style.opacity = '0.4';
+            btn.style.pointerEvents = 'none';
+            return;
+        }
+        const scrollY = window.scrollY;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollY > maxScroll - 60) {
+            btn.style.opacity = '0';
+            btn.style.transform = 'translateX(-50%) translateY(20px)';
+        } else {
+            btn.style.opacity = '1';
+            btn.style.transform = 'translateX(-50%) translateY(0)';
+        }
+        lastScrollY = scrollY;
+    });
+</script>
+
+</body>
+</html>
